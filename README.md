@@ -34,7 +34,6 @@ Users can manage tasks, update profile details, upload profile photos, and track
 - Mongoose
 - Multer
 - CORS
-- Dotenv
 
 ---
 
@@ -125,8 +124,6 @@ http://localhost:8080
 
 - Task Search
 - Task Filters
-- Dark Mode
-- Notifications
 - Drag and Drop Tasks
 - Role Based Access
 
