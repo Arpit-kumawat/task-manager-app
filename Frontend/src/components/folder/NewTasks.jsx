@@ -16,6 +16,27 @@ export default function NewTask() {
     completed: false,
   });
 
+  const [users, setUsers] = useState([]);
+
+  const fetchUsers = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/api/user/all-users");
+      const data = await res.json();
+
+      if (res.ok) {
+        setUsers(data);
+      } else {
+        console.log(data.message || "Failed to fetch users");
+      }
+    } catch (error) {
+      console.log("Fetch users error:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
   useEffect(() => {
     const fetchTask = async () => {
       try {
@@ -114,15 +135,22 @@ export default function NewTask() {
               {formData.desc.length} / 500
             </p>
 
-            <label className="font-medium mt-4 block">Assigned To *</label>
-            <input
-              type="text"
-              name="assigned"
-              value={formData.assigned}
-              onChange={handleChange}
-              placeholder="Enter user name..."
-              className="border p-2 rounded w-full mt-1"
-            />
+            <div>
+              <label className="font-medium mt-4 block">Assigned To *</label>
+              <select
+                name="assigned"
+                value={formData.assigned}
+                onChange={handleChange}
+                className="border p-2 rounded w-full mt-1"
+              >
+                <option value="">Assigned to user</option>
+                {users.map((user) => (
+                  <option key={user._id} value={user._id}>
+                    {user.firstName}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-4">
               <div className="w-full">
